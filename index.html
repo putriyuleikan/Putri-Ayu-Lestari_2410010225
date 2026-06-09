@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Uut | Web</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <!-- === HEADER === -->
+<header class="header">
+  <div class="header-left">
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <h1 class="header-title">Dashboard Uut</h1>
+  </div>
+  <div class="user-info">
+    <span>Selamat datang, uut</span>
+    <a href="#" class="logout-btn">Logout</a>
+  </div>
+</header>
+
+  <!-- === CONTAINER UTAMA === -->
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <nav>
+        <h2 class="sidebar-title">Menu Utama</h2>
+        <ul>
+          <li><a href="#" class="menu-item active">Dashboard</a></li>
+          <li><a href="#" class="menu-item">Users</a></li>
+          <li><a href="#" class="menu-item">Products</a></li>
+          <li><a href="#" class="menu-item">Reports</a></li>
+          <li><a href="#" class="menu-item">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- === KONTEN UTAMA === -->
+    <main class="main-content" id="mainContent">
+      <div class="content-wrapper">
+        <h2 class="content-title">Dashboard</h2>
+        <p>Hai <b>uut</b> 👋, selamat datang di panel utama kamu!</p>
+
+        <!-- === KOTAK STATISTIK === -->
+        <div class="stats-grid">
+          <div class="stat-card card-blue">
+            <h3>Total Users</h3>
+            <p>10</p>
+          </div>
+          <div class="stat-card card-green">
+            <h3>Total Products</h3>
+            <p>567</p>
+          </div>
+          <div class="stat-card card-yellow">
+            <h3>Sales Today</h3>
+            <p>34</p>
+          </div>
+        </div>
+
+        <br /><hr />
+
+        <!-- === PARAGRAF & TOMBOL UBAH TEKS === -->
+        <section class="ubahteks-container">
+          <p id="paragrafTarget">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+            repudiandae dignissimos exercitationem quaerat enim qui provident
+            laborum, consequuntur sed voluptate illo beatae, molestiae cumque,
+            amet quod consequatur id nostrum ducimus!
+          </p>
+          <button id="tombolUbah" class="logout-btn">Ubah Teks</button>
+        </section>
+
+        <br /><hr />
+
+        <!-- === GALERI SLIDER === -->
+        <section class="galeri-container">
+          <h2>🌄 Galeri Pemandangan</h2>
+          <p class="galeri-desc">Geser atau klik gambar untuk melihat lebih dekat 🌿</p>
+
+          <div class="galeri-wrapper">
+            <button class="arrow-btn left" id="prevBtn">&#10094;</button>
+            <div class="galeri-slider" id="galeriSlider">
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600" alt="Danau Tenang">
+                <div class="caption">Danau Tenang di Pegunungan</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=600" alt="Hutan Berkabut">
+                <div class="caption">Hutan Berkabut di Pagi Hari</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600" alt="Gunung Biru">
+                <div class="caption">Gunung Biru dan Danau Kristal</div>
+              </div>
+              <div class="slide">
+                <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=600" alt="Air Terjun Deras">
+                <div class="caption">Air Terjun Deras di Hutan Tropis</div>
+              </div>
+            </div>
+            <button class="arrow-btn right" id="nextBtn">&#10095;</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- === FOOTER === -->
+  <footer class="footer">
+    <p>© 2025 | Dashboard by uut 🌸</p>
+  </footer>
+
+  <!-- === LIGHTBOX (popup gambar besar) === -->
+  <div id="lightbox" class="lightbox">
+    <span class="close-btn">&times;</span>
+    <img class="lightbox-img" id="lightboxImg" alt="gambar besar" />
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <!-- === SCRIPT JAVASCRIPT === -->
+  <script>
+    // ====== TOGGLE SIDEBAR ======
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    menuToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("hidden");
+    });
+
+    // ====== SLIDER GALERI ======
+    const slider = document.getElementById('galeriSlider');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    nextBtn.addEventListener('click', () => {
+      slider.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+    prevBtn.addEventListener('click', () => {
+      slider.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+
+    // Geser manual (drag)
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+    slider.addEventListener('mouseleave', () => (isDown = false));
+    slider.addEventListener('mouseup', () => (isDown = false));
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // ====== LIGHTBOX POPUP ======
+    const slides = document.querySelectorAll('.slide img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const closeBtn = document.querySelector('.close-btn');
+
+    slides.forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = img.src;
+        lightboxCaption.textContent = img.nextElementSibling?.textContent || img.alt;
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        lightbox.style.display = 'none';
+      }
+    });
+
+    // ====== FUNGSI UBAH TEKS ======
+    const tombolUbah = document.getElementById("tombolUbah");
+    const paragrafTarget = document.getElementById("paragrafTarget");
+
+    tombolUbah.addEventListener("click", function () {
+      let teksBaru = prompt("Masukkan teks baru untuk paragraf:");
+      if (teksBaru && teksBaru.trim() !== "") {
+        paragrafTarget.innerHTML = teksBaru;
+        paragrafTarget.style.color = "#66d9ef";
+        paragrafTarget.style.fontSize = "18px";
+        paragrafTarget.style.backgroundColor = "rgba(255,255,255,0.1)";
+        paragrafTarget.style.padding = "10px";
+        paragrafTarget.style.borderRadius = "10px";
+        paragrafTarget.style.transition = "all 0.4s ease";
+      } else {
+        alert("Teks tidak boleh kosong!");
+      }
+    });
+  </script>
+</body>
+</html>
